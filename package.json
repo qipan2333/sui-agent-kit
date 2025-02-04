@@ -1,0 +1,50 @@
+{
+  "name": "sui-agent-kit",
+  "version": "0.0.1",
+  "description": "An AI agent for Sui",
+  "keywords": [
+    "sui",
+    "agent"
+  ],
+  "main": "dist/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "homepage": "https://github.com/qipan2333/sui-agent-kit",
+  "license": "MIT",
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "devDependencies": {
+    "@arethetypeswrong/cli": "^0.15.4",
+    "@changesets/cli": "^2.27.7",
+    "prettier": "^3.3.3",
+    "tsup": "^8.2.4",
+    "typescript": "^5.5.4",
+    "vitest": "^2.0.5"
+  },
+  "dependencies": {
+    "@langchain/anthropic": "^0.3.11",
+    "@langchain/core": "^0.3.23",
+    "@langchain/google-genai": "^0.1.6",
+    "@langchain/openai": "^0.3.14",
+    "langchain": "^0.3.7",
+    "zod": "^3.24.1"
+  },
+  "peerDependencies": {
+  },
+  "scripts": {
+    "build": "tsup",
+    "ci": "pnpm run build && pnpm run check-format && pnpm run check-exports && pnpm run lint",
+    "lint": "tsc",
+    "test": "vitest run",
+    "format": "prettier --write .",
+    "check-format": "prettier --check .",
+    "check-exports": "attw --pack .",
+    "local-release": "pnpm run ci && changeset version && changeset publish"
+  }
+}
