@@ -33,18 +33,19 @@
     "@langchain/google-genai": "^0.1.6",
     "@langchain/openai": "^0.3.14",
     "langchain": "^0.3.7",
-    "zod": "^3.24.1"
+    "zod": "^3.24.1",
+    "navi-sdk": "^1.4.19"
   },
   "peerDependencies": {
   },
   "scripts": {
     "build": "tsup",
-    "ci": "pnpm run build && pnpm run check-format && pnpm run check-exports && pnpm run lint",
+    "ci": "npm run build && npm run check-format && npm run check-exports && npm run lint",
     "lint": "tsc",
     "test": "vitest run",
     "format": "prettier --write .",
     "check-format": "prettier --check .",
     "check-exports": "attw --pack .",
-    "local-release": "pnpm run ci && changeset version && changeset publish"
+    "local-release": "npm run ci && changeset version && changeset publish"
   }
 }
