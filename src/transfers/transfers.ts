@@ -33,9 +33,9 @@ export const transfer = async (params: TransferParams, privateKey: string) => {
     const adjustedAmount = BigInt(Number(params.amount) * Math.pow(10, coinInfo.decimal));
     
     const tx = new Transaction();
-    let coinsToTransfer: any;
     if (coinInfo.address == "0x2::sui::SUI") {
-      coinsToTransfer = tx.splitCoins(tx.gas, [adjustedAmount]);
+      const [coinsToTransfer] = tx.splitCoins(tx.gas, [adjustedAmount]);
+      tx.transferObjects([coinsToTransfer], params.to);
     } else {
       if (coins.length >= 2) {
         let baseObj = coins[0]!.coinObjectId;
@@ -44,10 +44,10 @@ export const transfer = async (params: TransferParams, privateKey: string) => {
         tx.mergeCoins(baseObj, allList);
       }
       let mergedCoin = tx.object(coins[0]!.coinObjectId);
-      coinsToTransfer = tx.splitCoins(mergedCoin, [adjustedAmount]);
+      const [coinsToTransfer] = tx.splitCoins(mergedCoin, [adjustedAmount]);
+      tx.transferObjects([coinsToTransfer], params.to);
     }
 
-    tx.transferObjects(coinsToTransfer, params.to);
     const executedTransaction =
       await client.signAndExecuteTransaction({
           signer: keypair,

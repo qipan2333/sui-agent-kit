@@ -26,7 +26,7 @@ const withWalletKey = <T>(
 const transferSchema = z.object({
   to: z.string().describe('The wallet address to transfer to'),
   amount: z.string().describe('The amount to transfer'),
-  symbol: z.string().describe('The asset symbol to transfer. eg. USDC'),
+  symbol: z.string().describe('The asset symbol to transfer. eg. Sui, USDC'),
 });
 
 const swapSchema = z.object({
@@ -34,7 +34,7 @@ const swapSchema = z.object({
   fromSymbol: z
     .string()
     .describe('The asset symbol to swap from. eg. USDC'),
-  toSymbol: z.string().describe('The asset symbol to swap to. eg. USDC'),
+  toSymbol: z.string().describe('The asset symbol to swap to. eg. Sui, USDC'),
   slippage: z
     .number()
     .optional()
@@ -43,7 +43,7 @@ const swapSchema = z.object({
 
 const supplyCollateralSchema = z.object({
   amount: z.string().describe('The amount to lend'),
-  symbol: z.string().describe('The asset symbol to lend. eg. USDC'),
+  symbol: z.string().describe('The asset symbol to lend. eg. Sui, USDC'),
 });
 
 const borrowAssetSchema = z.object({
@@ -63,7 +63,7 @@ const addLiquiditySchema = z.object({
 const getOwnBalanceSchema = z.object({
   symbol: z
     .string()
-    .describe('The asset symbol to get the balance of. eg. USDC'),
+    .describe('The asset symbol to get the balance of. eg. Sui, USDC'),
 });
 
 const getBalanceSchema = z.object({

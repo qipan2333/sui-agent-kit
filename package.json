@@ -7,18 +7,9 @@
     "agent"
   ],
   "main": "dist/index.js",
-  "exports": {
-    ".": {
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
-    }
-  },
+  "types": "dist/index.d.ts",
   "homepage": "https://github.com/qipan2333/sui-agent-kit",
   "license": "MIT",
-  "files": [
-    "dist"
-  ],
-  "type": "module",
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.15.4",
     "@changesets/cli": "^2.27.7",
@@ -39,7 +30,7 @@
   "peerDependencies": {
   },
   "scripts": {
-    "build": "tsup",
+    "build": "tsc",
     "ci": "npm run build && npm run check-format && npm run check-exports && npm run lint",
     "lint": "tsc",
     "test": "vitest run",

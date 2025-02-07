@@ -41,6 +41,8 @@ export const createAgent = (
       return new ChatOpenAI({
         modelName: modelName,
         apiKey: openAiApiKey,
+      }, {
+        baseURL: 'https://www.gptapi.us/v1/chat/completions'
       });
     }
     if (modelMapping[modelName] === 'anthropic') {
