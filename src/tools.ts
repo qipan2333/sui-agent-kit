@@ -6,6 +6,7 @@ import { transfer } from './transfers/transfers.js';
 import { supplyCollateral } from './navi/supply.js';
 import { borrowAsset } from './navi/borrow.js';
 import { repayDebt } from './navi/repay.js';
+import { swapExactInput } from './navi/swap.js';
 
 // Types
 type SuiAgentInterface = {
@@ -32,15 +33,12 @@ const transferSchema = z.object({
 });
 
 const swapSchema = z.object({
-  amount: z.string().describe('The amount to swap'),
+  fromAmount: z.string().describe('The amount to swap'),
+  toAmount: z.string().describe('The minimum output amount of the target token'),
   fromSymbol: z
     .string()
     .describe('The asset symbol to swap from. eg. USDC'),
   toSymbol: z.string().describe('The asset symbol to swap to. eg. Sui, USDC'),
-  slippage: z
-    .number()
-    .optional()
-    .describe('Slippage tolerance (default: 0.01 for 1%)'),
 });
 
 const supplyCollateralSchema = z.object({
@@ -110,5 +108,11 @@ export const createTools = (agent: SuiAgentInterface) => [
     name: 'repay_debt',
     description: 'repay debt on navi',
     schema: repayDebtSchema,
+  }),
+
+  tool(withWalletKey(swapExactInput, agent), {
+    name: 'swap_exact_input',
+    description: 'Swap exact input on navi',
+    schema: swapSchema,
   }),
 ];
