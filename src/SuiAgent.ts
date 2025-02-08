@@ -9,6 +9,8 @@ import {
 import { borrowAsset, type BorrowAssetParams } from './navi/borrow.js';
 import { repayDebt, type RepayDebtParams } from './navi/repay.js';
 import { swapExactInput, type SwapExactInputParams } from './navi/swap.js';
+import { getOwnBalance, type GetOwnBalanceParams } from './navi/balance.js';
+
 import { createAgent } from './agent.js';
 import type { AgentExecutor } from 'langchain/agents';
 import type { modelMapping } from './utils/models.js';
@@ -84,6 +86,10 @@ export class SuiAgent {
 
   async swapExactInput(params: SwapExactInputParams) {
     return await swapExactInput(params, this.walletPrivateKey);
+  }
+
+  async getOwnBalance(params: GetOwnBalanceParams) {
+    return await getOwnBalance(params, this.walletPrivateKey);
   }
 }
 

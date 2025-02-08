@@ -7,6 +7,7 @@ import { supplyCollateral } from './navi/supply.js';
 import { borrowAsset } from './navi/borrow.js';
 import { repayDebt } from './navi/repay.js';
 import { swapExactInput } from './navi/swap.js';
+import { getOwnBalance } from './navi/balance.js';
 
 // Types
 type SuiAgentInterface = {
@@ -70,7 +71,7 @@ const addLiquiditySchema = z.object({
 const getOwnBalanceSchema = z.object({
   symbol: z
     .string()
-    .describe('The asset symbol to get the balance of. eg. Sui, USDC'),
+    .describe('The asset symbol to get the balance of. eg. USDC, Sui'),
 });
 
 const getBalanceSchema = z.object({
@@ -79,7 +80,7 @@ const getBalanceSchema = z.object({
     .describe('The wallet address to get the balance of'),
   assetSymbol: z
     .string()
-    .describe('The asset symbol to get the balance of. eg. USDC'),
+    .describe('The asset symbol to get the balance of. eg. USDC, Sui'),
 });
 
 /**
@@ -114,5 +115,11 @@ export const createTools = (agent: SuiAgentInterface) => [
     name: 'swap_exact_input',
     description: 'Swap exact input on navi',
     schema: swapSchema,
+  }),
+
+  tool(withWalletKey(getOwnBalance, agent), {
+    name: 'get_own_balance',
+    description: 'Get the balance of an asset in your wallet',
+    schema: getOwnBalanceSchema,
   }),
 ];
