@@ -5,6 +5,7 @@ import { z } from 'zod';
 import { transfer } from './transfers/transfers.js';
 import { supplyCollateral } from './navi/supply.js';
 import { borrowAsset } from './navi/borrow.js';
+import { repayDebt } from './navi/repay.js';
 
 // Types
 type SuiAgentInterface = {
@@ -52,6 +53,12 @@ const borrowAssetSchema = z.object({
   symbol: z.string().describe('The asset symbol to borrow. eg. Sui, USDC'),
 });
 
+
+const repayDebtSchema = z.object({
+  amount: z.string().describe('The amount to repay'),
+  symbol: z.string().describe('The asset symbol to repay. eg. Sui, USDC'),
+});
+
 const addLiquiditySchema = z.object({
   amount0: z.string().describe('The amount of the first asset to add'),
   asset0Symbol: z.string().describe('The symbol of the first asset'),
@@ -97,5 +104,11 @@ export const createTools = (agent: SuiAgentInterface) => [
     name: 'borrow_asset',
     description: 'Borrow asset on navi',
     schema: borrowAssetSchema,
+  }),
+
+  tool(withWalletKey(repayDebt, agent), {
+    name: 'repay_debt',
+    description: 'repay debt on navi',
+    schema: repayDebtSchema,
   }),
 ];

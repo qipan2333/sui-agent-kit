@@ -7,6 +7,7 @@ import {
   type SupplyCollateralParams,
 } from './navi/supply.js';
 import { borrowAsset, type BorrowAssetParams } from './navi/borrow.js';
+import { repayDebt, type RepayDebtParams } from './navi/repay.js';
 import { createAgent } from './agent.js';
 import type { AgentExecutor } from 'langchain/agents';
 import type { modelMapping } from './utils/models.js';
@@ -74,6 +75,10 @@ export class SuiAgent {
 
   async borrowAsset(params: BorrowAssetParams) {
     return await borrowAsset(params, this.walletPrivateKey);
+  }
+
+  async repayDebt(params: RepayDebtParams) {
+    return await repayDebt(params, this.walletPrivateKey);
   }
 }
 
