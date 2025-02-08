@@ -3,7 +3,8 @@ import { z } from 'zod';
 
 // Import functions
 import { transfer } from './transfers/transfers.js';
-
+import { supplyCollateral } from './navi/supply.js';
+import { borrowAsset } from './navi/borrow.js';
 
 // Types
 type SuiAgentInterface = {
@@ -48,6 +49,7 @@ const supplyCollateralSchema = z.object({
 
 const borrowAssetSchema = z.object({
   amount: z.string().describe('The amount to borrow'),
+  symbol: z.string().describe('The asset symbol to borrow. eg. Sui, USDC'),
 });
 
 const addLiquiditySchema = z.object({
@@ -83,5 +85,17 @@ export const createTools = (agent: SuiAgentInterface) => [
     name: 'sui_transfer',
     description: 'Transfer any verified Sui asset to another wallet',
     schema: transferSchema,
+  }),
+
+  tool(withWalletKey(supplyCollateral, agent), {
+    name: 'supply_collateral',
+    description: 'Supply collateral on navi',
+    schema: supplyCollateralSchema,
+  }),
+
+  tool(withWalletKey(borrowAsset, agent), {
+    name: 'borrow_asset',
+    description: 'Borrow asset on navi',
+    schema: borrowAssetSchema,
   }),
 ];

@@ -2,6 +2,11 @@ import {
   transfer as walletTransfer,
   type TransferParams,
 } from './transfers/transfers.js';
+import {
+  supplyCollateral,
+  type SupplyCollateralParams,
+} from './navi/supply.js';
+import { borrowAsset, type BorrowAssetParams } from './navi/borrow.js';
 import { createAgent } from './agent.js';
 import type { AgentExecutor } from 'langchain/agents';
 import type { modelMapping } from './utils/models.js';
@@ -62,4 +67,13 @@ export class SuiAgent {
   async transfer(params: TransferParams) {
     return await walletTransfer(params, this.walletPrivateKey);
   }
+
+  async supplyCollateral(params: SupplyCollateralParams) {
+    return await supplyCollateral(params, this.walletPrivateKey);
+  }
+
+  async borrowAsset(params: BorrowAssetParams) {
+    return await borrowAsset(params, this.walletPrivateKey);
+  }
 }
+

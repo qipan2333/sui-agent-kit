@@ -1,10 +1,7 @@
-import { Sui, USDT, wUSDC, nUSDC, BUCK, BLUE, NS } from "navi-sdk";
-import type { CoinInfo } from "navi-sdk/dist/types/index.js";
 import { Ed25519Keypair } from "@mysten/sui/keypairs/ed25519";
 import { getFullnodeUrl, SuiClient, type CoinStruct, type CoinBalance } from "@mysten/sui/client";
 import { Transaction } from "@mysten/sui/transactions";
-
-export const coinInfos: CoinInfo[] = [Sui, USDT, wUSDC, nUSDC, BUCK, BLUE, NS];
+import { coinInfos } from "../constants"
 
 export type TransferParams = {
   to: string;
