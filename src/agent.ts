@@ -29,6 +29,7 @@ export const prompt = ChatPromptTemplate.fromMessages([
 export const createAgent = (
   suiAgent: { getCredentials: () => { walletPrivateKey: string } },
   modelName: keyof typeof modelMapping,
+  apiBaseUrl?: string,
   openAiApiKey?: string,
   anthropicApiKey?: string,
   googleGeminiApiKey?: string,
@@ -41,9 +42,7 @@ export const createAgent = (
       return new ChatOpenAI({
         modelName: modelName,
         apiKey: openAiApiKey,
-      }, {
-        baseURL: 'https://www.gptapi.us/v1/chat/completions'
-      });
+      }, { baseURL: apiBaseUrl });
     }
     if (modelMapping[modelName] === 'anthropic') {
       if (!anthropicApiKey) {
@@ -52,6 +51,7 @@ export const createAgent = (
       return new ChatAnthropic({
         modelName: modelName,
         anthropicApiKey: anthropicApiKey,
+        anthropicApiUrl: apiBaseUrl,
       });
     }
     if (modelMapping[modelName] === 'gemini') {
@@ -62,6 +62,7 @@ export const createAgent = (
         modelName: modelName,
         apiKey: googleGeminiApiKey,
         convertSystemMessageToHumanContent: true,
+        baseUrl: apiBaseUrl,
       });
     }
   };

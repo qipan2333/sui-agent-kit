@@ -25,6 +25,7 @@ import { SuiAgent } from 'sui-agent-kit'
 
 const agent = new SuiAgent({
   model: 'gpt-4o-mini',
+  apiBaseUrl: 'https://www.gptapi.us/v1/chat/completions', // change the default api url
   openAiApiKey: process.env.OPENAI_API_KEY,
   walletPrivateKey: process.env.SUI_WALLET_PRIVATE_KEY,
 });

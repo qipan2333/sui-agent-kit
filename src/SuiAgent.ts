@@ -18,6 +18,7 @@ import type { modelMapping } from './utils/models.js';
 export interface SuiAgentConfig {
   walletPrivateKey: string;
   model: keyof typeof modelMapping;
+  apiBaseUrl: string;
   openAiApiKey?: string;
   anthropicApiKey?: string;
   googleGeminiApiKey?: string;
@@ -27,6 +28,7 @@ export class SuiAgent {
   private walletPrivateKey: string;
   private agentExecutor: AgentExecutor;
   private model: keyof typeof modelMapping;
+  private apiBaseUrl: string;
   private openAiApiKey?: string;
   private anthropicApiKey?: string;
   private googleGeminiApiKey?: string;
@@ -34,10 +36,10 @@ export class SuiAgent {
   constructor(config: SuiAgentConfig) {
     this.walletPrivateKey = config.walletPrivateKey;
     this.model = config.model;
+    this.apiBaseUrl = config.apiBaseUrl;
     this.openAiApiKey = config.openAiApiKey;
     this.anthropicApiKey = config.anthropicApiKey;
     this.googleGeminiApiKey = config.googleGeminiApiKey;
-
     if (!this.walletPrivateKey) {
       throw new Error('Sui wallet private key is required.');
     }
@@ -45,6 +47,7 @@ export class SuiAgent {
     this.agentExecutor = createAgent(
       this,
       this.model,
+      this.apiBaseUrl,
       this.openAiApiKey,
       this.anthropicApiKey,
       this.googleGeminiApiKey,
